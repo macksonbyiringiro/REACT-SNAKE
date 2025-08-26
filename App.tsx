@@ -282,32 +282,46 @@ const App: React.FC = () => {
     setGameState(GameState.PLAYING);
   }
 
+  if (gameState === GameState.HOME) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex flex-col justify-center items-center p-4 text-center">
+        <h1 className="text-8xl font-black mb-4 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-500 to-teal-600">
+            SNAKE
+        </h1>
+        <p className="text-xl text-gray-400 mb-12">A classic reborn with React &amp; AI.</p>
+        
+        <div className="w-full max-w-lg min-h-[8rem] flex items-center justify-center p-6 mb-12 bg-gray-800/50 rounded-lg shadow-inner border border-gray-700">
+            {isFactLoading ? (
+                <div className="flex items-center space-x-3">
+                    <svg className="animate-spin h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span className="text-gray-400 italic">Fetching a fun snake fact...</span>
+                </div>
+            ) : (
+                <p className="text-lg text-center text-yellow-300 font-medium">
+                    <span className="font-bold text-yellow-200">Did you know? </span>{snakeFact}
+                </p>
+            )}
+        </div>
+        
+        <button
+            onClick={() => setGameState(GameState.IDLE)}
+            disabled={isFactLoading}
+            className="px-12 py-5 bg-gradient-to-br from-green-500 to-green-700 text-white font-bold text-2xl rounded-lg hover:from-green-600 hover:to-green-800 transition-all duration-300 ease-in-out shadow-lg disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-300/50"
+        >
+            Play Game
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col justify-center items-center p-4">
-      <h1 className="text-4xl font-bold mb-4 tracking-wider">REACT SNAKE</h1>
+      <h1 className="text-4xl font-bold mb-4 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-500">SNAKE</h1>
       <Scoreboard score={score} highScore={highScore} />
       <div className="relative">
-        {gameState === GameState.HOME && (
-             <GameOverlay>
-                <div className="flex flex-col items-center justify-center h-full max-w-xl">
-                    <h2 className="text-5xl font-bold mb-6">Welcome!</h2>
-                    <div className="w-full min-h-[8rem] flex items-center justify-center p-4 mb-8 bg-gray-800 rounded-lg shadow-inner">
-                        {isFactLoading ? (
-                            <p className="text-gray-400 italic">Fetching a fun snake fact...</p>
-                        ) : (
-                            <p className="text-lg text-center text-yellow-300 font-medium">{snakeFact}</p>
-                        )}
-                    </div>
-                    <button
-                        onClick={() => setGameState(GameState.IDLE)}
-                        disabled={isFactLoading}
-                        className="px-10 py-4 bg-blue-600 text-white font-bold text-2xl rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-lg disabled:bg-gray-500 disabled:cursor-not-allowed transform hover:scale-105"
-                    >
-                        Play Game
-                    </button>
-                </div>
-            </GameOverlay>
-        )}
         {gameState === GameState.IDLE && (
             <GameOverlay>
                 <h2 className="text-4xl font-bold mb-6">Select Difficulty</h2>
