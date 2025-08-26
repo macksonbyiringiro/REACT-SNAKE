@@ -1,4 +1,3 @@
-
 export type Point = {
   x: number;
   y: number;
@@ -12,7 +11,12 @@ export enum Direction {
 }
 
 export enum GameState {
+  HOME,
   IDLE,
   PLAYING,
   GAME_OVER,
+  PAUSED,
+  COUNTDOWN,
 }
+
+export type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
